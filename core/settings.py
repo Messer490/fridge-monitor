@@ -135,3 +135,6 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+CSRF_TRUSTED_ORIGINS = [
+    "https://fridge-monitor-2zfl.onrender.com"
+]
