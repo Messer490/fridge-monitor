@@ -20,7 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tw_y=gh13)c$#856m7vqp1489$d1q_i&i1oq#e9(06or$$edxj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -128,7 +127,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-TELEGRAM_BOT_TOKEN='7711521072:AAEByX44zSmql9Agipq-teCM4RiCtXH0ejM'
-TELEGRAM_CHAT_ID='6861906254'
+import os
 
-ALLOWED_HOSTS = ["fridge-monitor-2zfl.onrender.com"]
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-key")
+DEBUG = os.getenv("DEBUG", "True") == "True"
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
