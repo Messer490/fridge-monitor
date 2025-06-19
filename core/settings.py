@@ -9,8 +9,6 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-import dj_database_url
-import os
 
 from pathlib import Path
 
@@ -76,13 +74,16 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+import os
+import dj_database_url
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
+    'default': dj_database_url.parse(
+        os.environ.get('DATABASE_URL'),
         conn_max_age=600,
+        ssl_require=True,
     )
 }
-
 
 
 # Password validation
@@ -140,7 +141,3 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 CSRF_TRUSTED_ORIGINS = [
     "https://fridge-monitor-2zfl.onrender.com"
 ]
-
-import dj_database_url
-from pathlib import Path
-import os
