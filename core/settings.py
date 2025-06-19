@@ -130,3 +130,5 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 TELEGRAM_BOT_TOKEN='7711521072:AAEByX44zSmql9Agipq-teCM4RiCtXH0ejM'
 TELEGRAM_CHAT_ID='6861906254'
+
+ALLOWED_HOSTS = ["fridge-monitor-2zfl.onrender.com"]
