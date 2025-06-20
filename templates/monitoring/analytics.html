@@ -1,50 +1,45 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Аналитика температур</title>
-</head>
-<body>
-    <h1>Аналитика температур</h1>
-    <form method="get">
-        <label>Холодильник:
-            <select name="fridge">
-                <option value="">-- все --</option>
-                {% for f in fridges %}
-                    <option value="{{ f.id }}">{{ f.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
-        <label>Дата от:
-            <input type="date" name="date_from">
-        </label>
-        <label>Дата до:
-            <input type="date" name="date_to">
-        </label>
-        <button type="submit">Фильтр</button>
-    </form>
-
-    <a href="{% url 'export_csv' %}?fridge={{ request.GET.fridge }}">Скачать CSV</a>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Холодильник</th>
-                <th>Температура (°C)</th>
-                <th>Время</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for r in readings %}
-                <tr>
-                    <td>{{ r.fridge.name }}</td>
-                    <td>{{ r.value }}</td>
-                    <td>{{ r.timestamp }}</td>
-                </tr>
-            {% empty %}
-                <tr><td colspan="3">Нет данных</td></tr>
+{% extends "base_user.html" %}
+{% block title %}Аналитика температур{% endblock %}
+{% block content %}
+<h1>Аналитика температур</h1>
+<form method="get">
+    <label>Холодильник:
+        <select name="fridge">
+            <option value="">-- все --</option>
+            {% for f in fridges %}
+                <option value="{{ f.id }}">{{ f.name }}</option>
             {% endfor %}
-        </tbody>
-    </table>
-</body>
-</html>
+        </select>
+    </label>
+    <label>Дата от:
+        <input type="date" name="date_from">
+    </label>
+    <label>Дата до:
+        <input type="date" name="date_to">
+    </label>
+    <button type="submit">Фильтр</button>
+</form>
+
+<a href="{% url 'export_csv' %}?fridge={{ request.GET.fridge }}">Скачать CSV</a>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>Холодильник</th>
+            <th>Температура (°C)</th>
+            <th>Время</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in readings %}
+            <tr>
+                <td>{{ r.fridge.name }}</td>
+                <td>{{ r.value }}</td>
+                <td>{{ r.timestamp }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="3">Нет данных</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

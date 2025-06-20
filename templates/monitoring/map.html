@@ -1,52 +1,39 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Карта магазинов и холодильников</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        #map { height: 90vh; width: 100%; }
-    </style>
-</head>
-<body>
-    <h1>Карта мониторинга</h1>
-    <div id="map"></div>
+{% extends "base_user.html" %}
+{% block title %}Карта{% endblock %}
+{% block content %}
+<h1>Карта мониторинга</h1>
+<div id="map" style="height: 90vh; width: 100%;"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script>
+    const map = L.map('map').setView([43.2389, 76.8897], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
 
-    <script>
-        const map = L.map('map').setView([43.2389, 76.8897], 12);
+    const stores = {{ stores|safe }};
+    for (let s of stores) {
+        let color = 'green';
+        for (let f of s.fridges) {
+            if (f.current_temperature < f.temperature_min || f.current_temperature > f.temperature_max) {
+                color = 'red';
+                break;
+            }
+        }
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
+        const marker = L.circleMarker([s.latitude, s.longitude], {
+            radius: 10,
+            color: color,
+            fillColor: color,
+            fillOpacity: 0.8
         }).addTo(map);
 
-        const stores = {{ stores|safe }};
-        
-        for (let s of stores) {
-            let color = 'green';
-            let warning = false;
-            for (let f of s.fridges) {
-                if (f.current_temperature < f.temperature_min || f.current_temperature > f.temperature_max) {
-                    color = 'red';
-                    warning = true;
-                    break;
-                }
-            }
-
-            const marker = L.circleMarker([s.latitude, s.longitude], {
-                radius: 10,
-                color: color,
-                fillColor: color,
-                fillOpacity: 0.8
-            }).addTo(map);
-
-            let popup = `<b>${s.name}</b><br>${s.address}<br><ul>`;
-            for (let f of s.fridges) {
-                popup += `<li>${f.name}: ${f.current_temperature}°C</li>`;
-            }
-            popup += '</ul>';
-            marker.bindPopup(popup);
+        let popup = `<b>${s.name}</b><br>${s.address}<br><ul>`;
+        for (let f of s.fridges) {
+            popup += `<li>${f.name}: ${f.current_temperature}°C</li>`;
         }
-    </script>
-</body>
-</html>
+        popup += '</ul>';
+        marker.bindPopup(popup);
+    }
+</script>
+{% endblock %}
