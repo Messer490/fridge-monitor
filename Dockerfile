@@ -8,8 +8,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
 
-CMD ["sh", "-c", "\
-  python manage.py collectstatic --noinput && \
+CMD ["sh", "-c", "python manage.py collectstatic --noinput && \
   python manage.py migrate && \
   echo \"from django.contrib.auth import get_user_model; \
   User = get_user_model(); \
