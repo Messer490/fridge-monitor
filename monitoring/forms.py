@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from accounts.models import CustomUser  # если ты используешь кастомного юзера
+from accounts.models import CustomUser  # или откуда ты берёшь юзера
 
-class UserRegisterForm(UserCreationForm):
+class CustomUserCreationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
-        model = CustomUser  # замени на User, если не кастомный
-        fields = ['username', 'email', 'password1', 'password2']
+        model = CustomUser
+        fields = ('username', 'email', 'password')
