@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'accounts',
     'monitoring',
     'django.contrib.postgres',  # для аналитики и фильтрации
+    'admin_interface',
+    'colorfield',  # обязательная зависимость
 ]
 
 MIDDLEWARE = [

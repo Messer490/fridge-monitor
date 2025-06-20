@@ -12,8 +12,11 @@ class StoreAdmin(admin.ModelAdmin):
 
 @admin.register(Fridge)
 class FridgeAdmin(admin.ModelAdmin):
-    list_display = ['name', 'store', 'temperature_min', 'temperature_max', 'current_temperature', 'last_updated']
+    list_display = ['name', 'store', 'current_temperature', 'temperature_min', 'temperature_max', 'last_updated']
     list_filter = ['store']
+    search_fields = ['name']
+    ordering = ['store', 'name']
+
 
 @admin.register(TemperatureReading)
 class TemperatureReadingAdmin(admin.ModelAdmin):
