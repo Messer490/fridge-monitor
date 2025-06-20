@@ -4,6 +4,3 @@ apscheduler>=3.11
 requests>=2.28
 dj-database-url
 gunicorn
-django-admin-interface
-django-colorfield
-python-dotenv
