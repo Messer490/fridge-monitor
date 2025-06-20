@@ -10,6 +10,5 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('api/temperature/', views.receive_temperature, name='receive_temperature'),
     path('admin/', admin.site.urls),
-    path('', include('monitoring.urls')),  # основное приложение
     path('accounts/', include('accounts.urls')),  # наше новое
 ]
