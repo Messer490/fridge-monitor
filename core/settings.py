@@ -145,6 +145,5 @@ TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 CSRF_TRUSTED_ORIGINS = [
     "https://fridge-monitor-2zfl.onrender.com"
 ]
-
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # обязательно

@@ -12,3 +12,12 @@ node_modules/
 .git/
 .idea/
 .vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+staticfiles/
+node_modules/
