@@ -87,8 +87,8 @@ USE_TZ = True
 
 # Статические файлы
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # ✅
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')    # ✅
 
 # Безопасность
 CSRF_TRUSTED_ORIGINS = [
