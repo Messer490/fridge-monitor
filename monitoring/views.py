@@ -81,7 +81,8 @@ def map_view(request):
 
     return render(request, 'monitoring/map.html', {'stores': json.dumps(stores, cls=DjangoJSONEncoder)})
 def home_view(request):
-    return HttpResponse("<h1>Добро пожаловать! Перейдите на <a href='/map/'>Карту</a> или <a href='/analytics/'>Аналитику</a></h1>")
+    return render(request, 'monitoring/home.html')
+
 
 
 @csrf_exempt
