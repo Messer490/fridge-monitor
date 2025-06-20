@@ -1,24 +1,26 @@
 {% extends "admin/base.html" %}
 
+{% load static %}
+
 {% block title %}FridgeMonitor Admin{% endblock %}
 
 {% block extrahead %}
   {{ block.super }}
-  <link rel="stylesheet" href="{% static 'css/custom_admin.css' %}">
+  <link href="{% static 'css/custom_admin.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block branding %}
-<nav class="navbar navbar-dark bg-primary px-4 py-2">
-  <div class="d-flex justify-content-between align-items-center w-100">
-    <h1 id="site-name" class="h4 mb-0">
-      <a href="{% url 'admin:index' %}" class="text-white text-decoration-none">FridgeMonitor Admin</a>
-    </h1>
-    <div>
-      <a href="{% url 'map' %}" class="btn btn-outline-light btn-sm me-2">🗺 Карта</a>
-      <a href="{% url 'analytics' %}" class="btn btn-outline-light btn-sm">📊 Аналитика</a>
+  <header id="header">
+    <div class="container">
+      <div id="branding">
+        <h1>
+          <a href="{% url 'admin:index' %}" class="brand-link">FridgeMonitor Admin</a>
+          <a href="{% url 'map' %}" class="btn-nav">🗺 Карта</a>
+          <a href="{% url 'analytics' %}" class="btn-nav">📊 Аналитика</a>
+        </h1>
+      </div>
     </div>
-  </div>
-</nav>
+  </header>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

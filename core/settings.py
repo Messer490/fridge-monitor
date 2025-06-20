@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from pathlib import Path
 import os  # ← добавь это
+import dj_database_url
+db_url = os.environ.get("DATABASE_URL")
+if not db_url:
+    raise Exception("DATABASE_URL is not set.")
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -146,8 +150,5 @@ CSRF_TRUSTED_ORIGINS = [
     "https://fridge-monitor-2zfl.onrender.com"
 ]
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]

@@ -1,5 +1,7 @@
 :root {
-  --primary: #0d6efd;
+  --primary-color: #0d6efd;
+  --secondary-color: #ffffff;
+  --hover-color: #0056b3;
 }
 
 body {
@@ -7,19 +9,39 @@ body {
 }
 
 #header {
-  background-color: var(--primary) !important;
-  color: white;
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  border-bottom: 2px solid #084298;
 }
 
 #branding h1 {
-  font-size: 24px;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-a {
-  color: var(--primary);
+#branding .brand-link {
+  color: var(--secondary-color);
+  font-weight: bold;
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
+.btn-nav {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 4px 8px;
+  background-color: transparent;
+  border: 1px solid var(--secondary-color);
+  border-radius: 4px;
+  color: var(--secondary-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.btn-nav:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
 }
