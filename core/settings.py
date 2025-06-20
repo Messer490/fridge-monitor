@@ -55,10 +55,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'core.urls'
 
+# settings.py (фрагмент, связанный с шаблонами)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # 👈 вот это
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,8 +131,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# settings.py (фрагмент, связанный с CustomUser)
 AUTH_USER_MODEL = 'accounts.CustomUser'
-
 import os
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-key")

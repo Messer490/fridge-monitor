@@ -8,7 +8,6 @@ from django.contrib import messages
 from .forms import CustomUserCreationForm
 
 
-
 def register_view(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -43,4 +42,3 @@ class CustomPasswordResetView(PasswordResetView):
     email_template_name = 'accounts/password_reset_email.html'
     subject_template_name = 'accounts/password_reset_subject.txt'
     success_url = '/accounts/login/'
-
