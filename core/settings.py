@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',      # 👈 обязательно первым
+    'colorfield',           # 👈 обязательно вторым
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'monitoring',
-    'django.contrib.postgres',  # для аналитики и фильтрации
-    'admin_interface',
-    'colorfield',  # обязательная зависимость
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
