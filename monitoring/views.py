@@ -135,10 +135,13 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            if user.is_superuser:
+                return redirect('/admin/')  # или redirect('map') если хочешь
+            return redirect('map')  # обычный пользователь
     else:
         form = AuthenticationForm()
     return render(request, 'accounts/login.html', {'form': form})
+
 
 
 def logout_view(request):
