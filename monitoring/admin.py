@@ -22,3 +22,6 @@ class NotificationAdmin(admin.ModelAdmin):
     list_display = ['fridge', 'message', 'created_at', 'is_resolved']
     list_filter = ['is_resolved', 'created_at', 'fridge']
 
+admin.site.site_header = "FridgeMonitor Admin Панель"
+admin.site.index_title = "Администрирование сайта"
+admin.site.site_title = "FridgeMonitor"
