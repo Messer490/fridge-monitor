@@ -5,18 +5,19 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .forms import UserRegisterForm
+from .forms import CustomUserCreationForm
+
 
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')
     else:
-        form = UserRegisterForm()
+        form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
 
 
@@ -52,8 +53,8 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # автоматически логиним после регистрации
-            return redirect('home')  # перенаправим на главную
+            login(request, user)
+            return redirect('home')
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
