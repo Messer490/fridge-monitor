@@ -146,4 +146,8 @@ CSRF_TRUSTED_ORIGINS = [
     "https://fridge-monitor-2zfl.onrender.com"
 ]
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # обязательно
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
