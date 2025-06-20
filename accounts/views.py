@@ -9,15 +9,19 @@ from .forms import CustomUserCreationForm
 
 
 def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    try:
+        if request.method == 'POST':
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save()
+                login(request, user)
+                return redirect('home')
+        else:
+            form = CustomUserCreationForm()
+        return render(request, 'accounts/register.html', {'form': form})
+    except Exception as e:
+        return render(request, 'accounts/error.html', {'error': str(e)})
+
 
 
 def login_view(request):
