@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+.env
+*.env
+staticfiles/        # НЕ игнорируй, если не уверен — но можно оставить
+media/
+node_modules/
+.git/
+.idea/
+.vscode/

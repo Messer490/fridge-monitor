@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: fridge-monitor
+    env: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: fridge-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: >
+      sh -c "python manage.py migrate &&
+             echo \"from django.contrib.auth import get_user_model;
+             User = get_user_model();
+             User.objects.filter(username='admin').exists() or
+             User.objects.create_superuser('admin', 'admin@example.com', 'adminpass')\" | python manage.py shell &&
+             gunicorn core.wsgi:application --bind 0.0.0.0:8000"
