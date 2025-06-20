@@ -1,0 +1,25 @@
+:root {
+  --primary: #0d6efd;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+#header {
+  background-color: var(--primary) !important;
+  color: white;
+}
+
+#branding h1 {
+  font-size: 24px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

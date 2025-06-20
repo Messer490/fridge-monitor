@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from pathlib import Path
 import os  # ← добавь это
-
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,8 +33,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_interface',      # 👈 обязательно первым
-    'colorfield',           # 👈 обязательно вторым
+    'admin_interface',       # обязательно первым!
+    'colorfield',            # обязательно вторым!
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'monitoring',
     'django.contrib.postgres',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -153,4 +155,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-X_FRAME_OPTIONS = "SAMEORIGIN"  # 👈 обязательно для админ-интерфейса
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
