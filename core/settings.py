@@ -85,11 +85,17 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
+from pathlib import Path
+
 # Статические файлы
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Безопасность
 CSRF_TRUSTED_ORIGINS = [
     "https://fridge-monitor-2zfl.onrender.com"
