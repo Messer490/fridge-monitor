@@ -15,14 +15,13 @@
 
     body {
       font-family: var(--font-stack);
-      background-color: #f8f9fa;
-      color: #212529;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     #header {
       background-color: var(--primary-color);
       padding: 10px 20px;
-      border-bottom: 3px solid #146c43;
+      border-bottom: 3px solid var(--hover-color);
     }
 
     #branding h1 {
@@ -37,22 +36,15 @@
       color: var(--secondary-color);
       font-weight: 600;
       text-decoration: none;
-      transition: color 0.2s ease-in-out;
-    }
-
-    #branding .brand-link:hover {
-      color: #e2e6ea;
     }
 
     .btn-nav {
-      display: inline-block;
       margin-left: 10px;
       padding: 6px 12px;
       background-color: transparent;
       border: 1px solid var(--secondary-color);
       border-radius: 4px;
       color: var(--secondary-color);
-      text-decoration: none;
       font-size: 0.875rem;
       transition: background-color 0.3s, color 0.3s;
     }
@@ -62,15 +54,42 @@
       color: var(--primary-color);
     }
 
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
+    /* ===== ТЕМНАЯ ТЕМА ===== */
+    body.dark {
+      background-color: #121212;
+      color: #f0f0f0;
     }
 
-    a:hover {
-      text-decoration: underline;
+    body.dark #header {
+      background-color: #0f5132;
+      border-bottom-color: #0c4128;
+    }
+
+    body.dark a,
+    body.dark .brand-link {
+      color: #6fda44;
+    }
+
+    body.dark .btn-nav {
+      border-color: #f0f0f0;
+      color: #f0f0f0;
+    }
+
+    body.dark .btn-nav:hover {
+      background-color: #f0f0f0;
+      color: #0f5132;
     }
   </style>
+
+  <script>
+    (function () {
+      const theme = localStorage.getItem("theme");
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+        document.body.classList.add("dark");
+      }
+    })();
+  </script>
 {% endblock %}
 
 {% block branding %}
@@ -82,11 +101,23 @@
           <span>
             <a href="{% url 'map' %}" class="btn-nav">🗺 Карта</a>
             <a href="{% url 'analytics' %}" class="btn-nav">📊 Аналитика</a>
+            <button class="btn-nav" onclick="toggleTheme()">🌗 Тема</button>
           </span>
         </h1>
       </div>
     </div>
   </header>
+
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const body = document.body;
+      const isDark = html.classList.toggle("dark");
+      body.classList.toggle("dark");
+
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+  </script>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}
