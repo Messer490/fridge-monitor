@@ -12,11 +12,13 @@ def send_telegram_message(message: str, chat_id=None, bot_token=None):
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     data = {
         "chat_id": chat_id,
-        "text": message
+        "text": message,
+        "parse_mode": "Markdown"
     }
 
     try:
         response = requests.post(url, data=data)
         response.raise_for_status()
+        print("✅ Telegram message sent")
     except Exception as e:
         print(f"Telegram error: {e}")
