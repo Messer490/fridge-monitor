@@ -100,3 +100,4 @@ CSRF_TRUSTED_ORIGINS = [
 # Telegram (необязательно)
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+ALLOWED_HOSTS = ["*", "localhost", "192.168.1.3"]
