@@ -5,6 +5,7 @@ from django.urls import path, include
 # urls.py
 from django.urls import path
 from .views import admin_dashboard
+from .views import admin_dashboard
 
 urlpatterns = [
     path('analytics/', views.analytics_view, name='analytics'),
