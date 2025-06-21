@@ -18,7 +18,7 @@ def send_telegram_message(message: str, chat_id=None, bot_token=None):
 
     try:
         response = requests.post(url, data=data)
+        print("📤 Telegram ответ:", response.status_code, response.text)
         response.raise_for_status()
-        print("✅ Telegram message sent")
     except Exception as e:
         print(f"Telegram error: {e}")
