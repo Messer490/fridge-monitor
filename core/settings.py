@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'accounts',
     'monitoring',
     'dashboard',
-
 ]
 
 # Middleware
