@@ -46,7 +46,15 @@ def analytics_view(request):
         'fridges': fridges,
         'readings': readings.order_by('-timestamp')[:100],
     }
+    if selected_fridge:
+        try:
+            fridge = Fridge.objects.get(id=selected_fridge)
+            context['temperature_min'] = fridge.temperature_min
+            context['temperature_max'] = fridge.temperature_max
+        except Fridge.DoesNotExist:
+            pass
     return render(request, 'monitoring/analytics.html', context)
+# если выбран 1 холодильник — добавим его пороги
 
 
 def export_csv(request):

@@ -1,27 +1,33 @@
 {% extends "base_user.html" %}
 {% block title %}Аналитика температур{% endblock %}
+
 {% block content %}
 <h1>Аналитика температур</h1>
-<form method="get">
+
+<form method="get" class="mb-4">
     <label>Холодильник:
-        <select name="fridge">
+        <select name="fridge" class="form-select d-inline w-auto">
             <option value="">-- все --</option>
             {% for f in fridges %}
-                <option value="{{ f.id }}">{{ f.name }}</option>
+                <option value="{{ f.id }}" {% if request.GET.fridge == f.id|stringformat:"s" %}selected{% endif %}>{{ f.name }}</option>
             {% endfor %}
         </select>
     </label>
     <label>Дата от:
-        <input type="date" name="date_from">
+        <input type="date" name="date_from" value="{{ request.GET.date_from }}" class="form-control d-inline w-auto">
     </label>
     <label>Дата до:
-        <input type="date" name="date_to">
+        <input type="date" name="date_to" value="{{ request.GET.date_to }}" class="form-control d-inline w-auto">
     </label>
-    <button type="submit">Фильтр</button>
+    <button type="submit" class="btn btn-primary">Фильтр</button>
 </form>
 
-<a href="{% url 'export_csv' %}?fridge={{ request.GET.fridge }}">Скачать CSV</a>
+<a class="btn btn-success mb-3" href="{% url 'export_csv' %}?fridge={{ request.GET.fridge }}">Скачать CSV</a>
 
+<!-- График температуры -->
+<canvas id="tempChart" width="400" height="200" class="mb-5"></canvas>
+
+<!-- Таблица -->
 <table class="table table-bordered mt-3">
     <thead>
         <tr>
@@ -42,4 +48,121 @@
         {% endfor %}
     </tbody>
 </table>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('tempChart').getContext('2d');
+
+    const labels = [
+        {% for reading in readings reversed %}
+            "{{ reading.timestamp|date:'H:i d.m' }}",
+        {% endfor %}
+    ];
+
+    const values = [
+        {% for reading in readings reversed %}
+            {{ reading.value }},
+        {% endfor %}
+    ];
+
+    const pointColors = values.map(v => {
+        const min = {{ temperature_min|default:0 }};
+        const max = {{ temperature_max|default:100 }};
+        return (v < min || v > max) ? 'rgba(255, 99, 132, 1)' : 'rgba(75, 192, 192, 1)';
+    });
+
+    const chartData = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Температура (°C)',
+                data: values,
+                fill: false,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: pointColors,
+                pointBackgroundColor: pointColors,
+                tension: 0.2
+            },
+            {% if temperature_min and temperature_max %}
+            {
+                label: 'Мин. порог',
+                data: Array(values.length).fill({{ temperature_min }}),
+                borderDash: [5, 5],
+                borderColor: 'orange',
+                fill: false,
+                pointRadius: 0
+            },
+            {
+                label: 'Макс. порог',
+                data: Array(values.length).fill({{ temperature_max }}),
+                borderDash: [5, 5],
+                borderColor: 'red',
+                fill: false,
+                pointRadius: 0
+            }
+            {% endif %}
+        ]
+    };
+
+    const tempChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            scales: {
+                x: { title: { display: true, text: 'Время' } },
+                y: { title: { display: true, text: '°C' } }
+            },
+            plugins: {
+                legend: { display: true },
+                tooltip: { enabled: true }
+            }
+        }
+    });
+</script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('tempChart').getContext('2d');
+    const chartData = {
+        labels: [
+            {% for reading in readings reversed %}
+                "{{ reading.timestamp|date:'H:i d.m' }}",
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Температура (°C)',
+            data: [
+                {% for reading in readings reversed %}
+                    {{ reading.value }},
+                {% endfor %}
+            ],
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.2
+        }]
+    };
+
+    const tempChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true },
+                tooltip: { enabled: true }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'Время' }
+                },
+                y: {
+                    title: { display: true, text: '°C' },
+                    suggestedMin: 0,
+                    suggestedMax: 10
+                }
+            }
+        }
+    });
+</script>
 {% endblock %}
