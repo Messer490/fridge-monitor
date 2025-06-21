@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'accounts',
     'monitoring',
+    'dashboard',
+
 ]
 
 # Middleware

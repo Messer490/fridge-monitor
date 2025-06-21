@@ -13,7 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from monitoring.models import Fridge, TemperatureReading, Notification
 import json
-
+# views.py
+from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render
 # accounts/views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
