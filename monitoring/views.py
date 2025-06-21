@@ -31,28 +31,40 @@ def analytics_view(request):
     selected_fridge = request.GET.get('fridge')
     date_from = request.GET.get('date_from')
     date_to = request.GET.get('date_to')
+    range_filter = request.GET.get('range')
 
     readings = TemperatureReading.objects.all()
 
     if selected_fridge:
         readings = readings.filter(fridge_id=selected_fridge)
 
+    if range_filter:
+        now = timezone.now()
+        if range_filter == "day":
+            date_from = now - timedelta(days=1)
+        elif range_filter == "week":
+            date_from = now - timedelta(weeks=1)
+        elif range_filter == "month":
+            date_from = now - timedelta(days=30)
+
     if date_from:
         readings = readings.filter(timestamp__gte=date_from)
     if date_to:
         readings = readings.filter(timestamp__lte=date_to)
 
+    temperature_min = None
+    temperature_max = None
+    if selected_fridge:
+        fridge = Fridge.objects.get(id=selected_fridge)
+        temperature_min = fridge.temperature_min
+        temperature_max = fridge.temperature_max
+
     context = {
         'fridges': fridges,
         'readings': readings.order_by('-timestamp')[:100],
+        'temperature_min': temperature_min,
+        'temperature_max': temperature_max,
     }
-    if selected_fridge:
-        try:
-            fridge = Fridge.objects.get(id=selected_fridge)
-            context['temperature_min'] = fridge.temperature_min
-            context['temperature_max'] = fridge.temperature_max
-        except Fridge.DoesNotExist:
-            pass
     return render(request, 'monitoring/analytics.html', context)
 # если выбран 1 холодильник — добавим его пороги
 
