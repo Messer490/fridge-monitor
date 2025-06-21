@@ -1,3 +1,4 @@
+
 {% extends "admin/base.html" %}
 {% load static %}
 
@@ -79,8 +80,10 @@
       <div id="branding">
         <h1>
           <a href="{% url 'admin:index' %}" class="brand-link">FridgeMonitor Admin</a>
-          <a href="{% url 'map' %}" class="btn-nav">🗺 Карта</a>
-          <a href="{% url 'analytics' %}" class="btn-nav">📊 Аналитика</a>
+          <span>
+            <a href="{% url 'map' %}" class="btn-nav">🗺 Карта</a>
+            <a href="{% url 'analytics' %}" class="btn-nav">📊 Аналитика</a>
+          </span>
         </h1>
       </div>
     </div>
