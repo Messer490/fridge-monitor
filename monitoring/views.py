@@ -23,6 +23,7 @@ from django.contrib.auth.forms import AuthenticationForm, PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from monitoring.telegram import send_telegram_message  # <-- подключаем
 
 
 def analytics_view(request):
@@ -110,6 +111,7 @@ def receive_temperature(request):
             if value < fridge.temperature_min or value > fridge.temperature_max:
                 msg = f"⚠️ {fridge.name}: {value}°C (норма {fridge.temperature_min}–{fridge.temperature_max})"
                 Notification.objects.create(fridge=fridge, message=msg)
+                send_telegram_message(msg)
 
             return JsonResponse({'status': 'success', 'message': 'Данные получены'})
 
