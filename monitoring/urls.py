@@ -6,6 +6,8 @@ from django.urls import path, include
 from django.urls import path
 from .views import admin_dashboard
 from .views import admin_dashboard
+from django.urls import path
+from . import views
 
 urlpatterns = [
     path('analytics/', views.analytics_view, name='analytics'),
